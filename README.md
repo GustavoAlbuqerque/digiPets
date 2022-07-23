@@ -1,4 +1,4 @@
-# digiPetsDesktop
+<h1 align="center"> DigiPets </h1>
 Projeto final utilizado na disciplina de Programção Desktop, é um sistema que gerencia uma carteira de vacina para animais chamado DigiPets utilizando a linguagem Java 
 e a IDE Eclipse.
 
