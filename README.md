@@ -1,5 +1,5 @@
 <h1 align="center"> DigiPets </h1>
-Esse é um projeto que foi utilizado na disciplina de Programção Desktop, é um sistema que gerencia uma carteira de vacina para animais chamado DigiPets utilizando a linguagem Java e a IDE Eclipse.
+Esse é um projeto que foi utilizado na disciplina de Programção Desktop, é um sistema que gerencia uma carteira de vacina para animais chamado DigiPets utilizando a linguagem Java, banco MySQL e a IDE Eclipse.
 
 Funcionalidades pedidas no projeto : Cadastrar, consultar, alterar, excluir e ligação com banco de dados.
 
