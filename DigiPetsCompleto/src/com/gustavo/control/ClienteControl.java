@@ -16,8 +16,8 @@ public class ClienteControl {
 		return false;
 	}
 
-	public ArrayList<Cliente> listarCliente(String cpf) throws ExceptionDAO, SQLException {
-		return new Cliente().listarCliente(cpf);
+	public ArrayList<Cliente> listarCliente() throws ExceptionDAO, SQLException {
+		return new Cliente().listarCliente();
 	}
 
 }

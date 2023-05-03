@@ -21,14 +21,14 @@ public class ClienteDAO {
 	private String sql;
 
 	public void cadastrarCliente(Cliente cliente) throws ExceptionDAO {
-		String sql = "INSERT INTO cliente (cpfCliente, nomeCliente, endereco) VALUES (?,?,?)";
+		String sql = "INSERT INTO Tb_Tutores (Nome, CPF, Endereco) VALUES (?,?,?)";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		try{
 			connection = new ConnectionMVC().getConnection();
 			pStatement = connection.prepareStatement(sql);
-			pStatement.setString(1, cliente.getCpf());
-			pStatement.setString(2, cliente.getNome());
+			pStatement.setString(1, cliente.getNome());
+			pStatement.setString(2, cliente.getCpf());
 			pStatement.setString(3, cliente.getEndereco());
 			pStatement.execute();
 
@@ -54,8 +54,8 @@ public class ClienteDAO {
 
 
 
-	public ArrayList<Cliente> listarClientes(String cpf) throws ExceptionDAO, SQLException {
-		String sql = " select * from cliente where cpfCliente =" + cpf ;
+	public ArrayList<Cliente> listarClientes() throws ExceptionDAO, SQLException {
+		String sql = "SELECT * FROM Tb_Tutores";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		ArrayList<Cliente> clientes = null;
@@ -63,15 +63,15 @@ public class ClienteDAO {
 		try {
 			connection = new ConnectionMVC().getConnection();
 			pStatement = connection.prepareStatement(sql);
-			ResultSet rs = pStatement.executeQuery(sql);
+			ResultSet rs = pStatement.executeQuery();
 
 			if (rs != null) {
 				clientes = new ArrayList<Cliente>();
 				while (rs.next()) {
 					Cliente cliente = new Cliente();
-					cliente.setCpf(rs.getString("cpfCliente"));
-					cliente.setNome(rs.getString("nomeCliente"));
-					cliente.setEndereco(rs.getString("endereco"));
+					cliente.setNome(rs.getString("Nome"));
+					cliente.setCpf(rs.getString("CPF"));
+					cliente.setEndereco(rs.getString("Endereco"));
 
 					clientes.add(cliente);
 				}
@@ -98,7 +98,7 @@ public class ClienteDAO {
 	}
 
 	public ArrayList<Cliente> comboMostra() throws ExceptionDAO, SQLException {
-		String sql = "select cpfCliente from cliente ";
+		String sql = "SELECT Id, Nome FROM Tb_Tutores";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		ArrayList<Cliente> clientes = null;
@@ -106,18 +106,21 @@ public class ClienteDAO {
 		try {
 			connection = new ConnectionMVC().getConnection();
 			pStatement = connection.prepareStatement(sql);
-			ResultSet rs = pStatement.executeQuery(sql);
+			ResultSet rs = pStatement.executeQuery();
 			System.out.println("Resultado consulta"+ rs);
 			if (rs != null) {
 				clientes = new ArrayList<Cliente>();
 				while (rs.next()) {
 					Cliente cliente = new Cliente();
-					cliente.setCpf(rs.getString("cpfCliente"));
+					cliente.setId(rs.getInt("Id"));
+					cliente.setNome(rs.getString("Nome"));
 					clientes.add(cliente);
 				}
 			}
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			throw new ExceptionDAO("Erro ao consultar cliente");
+			
 		} finally {
 			try {
 				if (pStatement != null) {

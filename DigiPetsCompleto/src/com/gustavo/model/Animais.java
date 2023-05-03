@@ -12,15 +12,15 @@ public class Animais {
 	private String raca;
 	private String sexo;
 	private String especie;
-	private String cpfDono;
+	private int idDono;
 
-	public Animais(String nome, String raca, String sexo, String especie, String cpfDono) {
+	public Animais(String nome, String raca, String sexo, String especie, int idDono) {
 
 		this.nome = nome;
 		this.raca = raca;
 		this.sexo = sexo;
 		this.especie = especie;
-		this.cpfDono = cpfDono;
+		this.idDono = idDono;
 	}
 	public Animais() {
 
@@ -66,12 +66,12 @@ public class Animais {
 		this.especie = especie;
 	}
 
-	public String getCpfDono() {
-		return cpfDono;
+	public int getIdDono() {
+		return idDono;
 	}
 
-	public void setCpfDono(String cpfDono) {
-		this.cpfDono = cpfDono;
+	public void setIdDono(int idDono) {
+		this.idDono = idDono;
 	}
 
 	public static void cadastrarAnimais(Animais animal) throws ExceptionDAO {
@@ -82,8 +82,8 @@ public class Animais {
 		return new AnimalDAO().listarAnimais();
 	}
 
-	public ArrayList<Animais> listarAnimaisClienteCompleto(String cpfDono) throws ExceptionDAO, SQLException{
-		return new AnimalDAO().listarAnimaisClienteCompleto(cpfDono);
+	public ArrayList<Animais> listarAnimaisClienteCompleto(int idDono) throws ExceptionDAO, SQLException{
+		return new AnimalDAO().listarAnimaisClienteCompleto(idDono);
 	}
 	public ArrayList<Animais> listarAnimaisCliente(int idPet) throws ExceptionDAO, SQLException{
 		return new AnimalDAO().listarAnimaisCliente(idPet);

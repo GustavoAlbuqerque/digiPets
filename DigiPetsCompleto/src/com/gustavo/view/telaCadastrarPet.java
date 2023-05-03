@@ -17,6 +17,7 @@ import com.gustavo.model.Cliente;
 
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -29,7 +30,8 @@ import java.awt.Toolkit;
  * @author Gusta
  */
 public class telaCadastrarPet extends javax.swing.JFrame {
-	private JComboBox jCBCpfDono;
+	private JComboBox<String> jCBNomeTutor;
+	private List<Cliente> clientesCombo;
 	/**
 	 * Creates new form telaCadastrarPet
 	 */
@@ -52,7 +54,7 @@ public class telaCadastrarPet extends javax.swing.JFrame {
 		jTFNome = new javax.swing.JTextField();
 		jTFRaca = new javax.swing.JTextField();
 		jTFEspecie = new javax.swing.JTextField();
-		jCBCpfDono = new JComboBox();
+		jCBNomeTutor = new JComboBox<String>();
 		jButton1 = new javax.swing.JButton();
 		jBTNCadastrar = new javax.swing.JButton();
 		jBTNCadastrar.addActionListener(new ActionListener() {
@@ -91,7 +93,7 @@ public class telaCadastrarPet extends javax.swing.JFrame {
 
 		jLabel1.setText("Nome:");
 
-		jLabel5.setText("CPF Dono:");
+		jLabel5.setText("Tutor:");
 
 		jLabel6.setText("Especie:");
 
@@ -112,7 +114,7 @@ public class telaCadastrarPet extends javax.swing.JFrame {
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(jTFNome, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-								.addComponent(jCBCpfDono, 0, 169, Short.MAX_VALUE)
+								.addComponent(jCBNomeTutor, 0, 169, Short.MAX_VALUE)
 								.addComponent(jTFRaca, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
 								.addComponent(jTFEspecie, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
 								.addComponent(jTFSexo))
@@ -128,7 +130,7 @@ public class telaCadastrarPet extends javax.swing.JFrame {
 				jPanel1Layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(jPanel1Layout.createSequentialGroup()
 						.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(jCBCpfDono, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jCBNomeTutor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(jLabel5))
 						.addGap(18)
 						.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
@@ -188,9 +190,10 @@ public class telaCadastrarPet extends javax.swing.JFrame {
 	public void PreencherCombo() {
 		try {
 			ClienteDAO cliente = new ClienteDAO();
+			clientesCombo = cliente.comboMostra();
 
-			for (Cliente c : cliente.comboMostra()) {
-				jCBCpfDono.addItem(c.getCpf());
+			for (Cliente c : clientesCombo) {
+				jCBNomeTutor.addItem(c.getNome());
 			}
 		} catch (ExceptionDAO | SQLException e) {
 			e.printStackTrace();
@@ -210,8 +213,14 @@ public class telaCadastrarPet extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(null, "O sexo tem que ser Feminino ou Masculino");
 			}else {
 
-				String cboValor2 =  (String) jCBCpfDono.getSelectedItem();
-				sucesso = AnimaisControl.cadastrarAnimais(nome, raca, sexo, especie,  (cboValor2) );
+				String cboValor2 =  (String)jCBNomeTutor.getSelectedItem();
+				int idTutor = 0;
+				for(Cliente cli : clientesCombo) {
+			        if(cli.getNome() == cboValor2) {
+			        	idTutor = cli.getId();
+			        }
+				}
+				sucesso = AnimaisControl.cadastrarAnimais(nome, raca, sexo, especie, idTutor);
 				System.out.println(sucesso);
 				if (sucesso == true) {
 					JOptionPane.showMessageDialog(null, "Pet cadastrado com sucesso");

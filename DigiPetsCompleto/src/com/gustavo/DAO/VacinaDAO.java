@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class VacinaDAO {
 
 	public void cadastrarVacina(Vacina vacina) throws ExceptionDAO, SQLException {
-		String sql = "INSERT INTO vacina(nomeVacina, dataAplicaVacina, idPet) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO Tb_Vacinas(Nome, Data_Aplicacao, Id_Animal) VALUES (?, ?, ?)";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 
@@ -48,7 +48,7 @@ public class VacinaDAO {
 	}
 
 	public void alterarVacina(Vacina vacina) throws ExceptionDAO, SQLException {
-		String sql = "UPDATE vacina SET nomeVacina = ?, dataAplicaVacina = ? WHERE codVacina = ?";
+		String sql = "UPDATE Tb_Vacinas SET Nome = ?, Data_Aplicacao = ? WHERE Id = ?";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		try {
@@ -83,9 +83,9 @@ public class VacinaDAO {
 		}
 	}
 
-	public ArrayList<Vacina> listarVacinaPet(int cod) throws ExceptionDAO, SQLException {
-		String sql = " SELECT vc.codVacina, vc.nomeVacina, vc.dataAplicaVacina FROM vacina vc "
-				+ "INNER JOIN animais an ON vc.idPet = an.idPet  WHERE an.idPet = '"+ cod+"'";
+	public ArrayList<Vacina> listarVacinaPet(int idPet) throws ExceptionDAO, SQLException {
+		String sql = " SELECT vc.Id, vc.Nome, vc.Data_Aplicacao FROM Tb_Vacinas vc "
+				+ "INNER JOIN Tb_Animais an ON vc.Id_Animal = an.Id  WHERE an.Id = "+ idPet;
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		ArrayList<Vacina> vacinas = null;
@@ -102,10 +102,9 @@ public class VacinaDAO {
 				while (rs.next()) {
 
 					Vacina vac = new Vacina();
-
-					vac.setCodigo(rs.getInt("codVacina"));
-					vac.setNome(rs.getString("nomeVacina"));
-					vac.setDataAplicacao(rs.getString("dataAplicaVacina"));
+					vac.setCodigo(rs.getInt("vc.Id"));
+					vac.setNome(rs.getString("vc.Nome"));
+					vac.setDataAplicacao(rs.getString("vc.Data_Aplicacao"));
 					vacinas.add(vac);
 				}
 			}
@@ -132,7 +131,7 @@ public class VacinaDAO {
 
 	}
 	public void deletarVacina(int cod) throws ExceptionDAO{
-		String sql = "DELETE FROM vacina WHERE codVacina = "+cod ;
+		String sql = "DELETE FROM Tb_Vacinas WHERE Id = "+cod ;
 
 		PreparedStatement pStatement = null;
 		Connection connection = null;
@@ -165,7 +164,7 @@ public class VacinaDAO {
 	}
 
 	public ArrayList<Vacina> carregandoID() throws ExceptionDAO, SQLException {
-		String sql = "select codVacina from vacina ";
+		String sql = "SELECT Id FROM Tb_Vacinas";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		ArrayList<Vacina> vacinas = null;
@@ -179,7 +178,7 @@ public class VacinaDAO {
 				vacinas = new ArrayList<Vacina>();
 				while (rs.next()) {
 					Vacina vacina = new Vacina();
-					vacina.setCodigo(rs.getInt("codVacina"));
+					vacina.setCodigo(rs.getInt("Id"));
 					vacinas.add(vacina);
 				}
 			}

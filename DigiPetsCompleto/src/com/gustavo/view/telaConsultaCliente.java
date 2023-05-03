@@ -187,7 +187,7 @@ public class telaConsultaCliente extends javax.swing.JFrame {
 		tableModel.setRowCount(0);
 		try {
 			String id = jTFCpf.getText();
-			ArrayList<Cliente> cliente = clienteControl.listarCliente(id);
+			ArrayList<Cliente> cliente = clienteControl.listarCliente();
 
 			cliente.forEach((Cliente clientes) -> {
 				tableModel.addRow(new Object[] { clientes.getCpf(), clientes.getNome(),
@@ -212,7 +212,7 @@ public class telaConsultaCliente extends javax.swing.JFrame {
 	public void pesquisaPet() {
 		DefaultTableModel tableModel = (DefaultTableModel) jTBPet.getModel();
 		try {
-			String id = jTFCpf.getText();
+			int id = Integer.parseInt(jTFCpf.getText());
 			AnimaisControl animaisControl = new AnimaisControl();
 
 			ArrayList<Animais> animal = animaisControl.listarAnimaisClienteCompleto(id);

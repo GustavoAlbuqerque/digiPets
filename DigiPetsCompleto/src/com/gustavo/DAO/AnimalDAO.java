@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class AnimalDAO  {
 
 	public void cadastrarAnimais(Animais animal) throws ExceptionDAO {
-		String sql = "INSERT INTO animais(nomePet, racaPet, sexoPet, especiePet, cpfDono) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO Tb_Animais(Nome, Raca, Sexo, Especie, Id_Tutor) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 
@@ -24,7 +24,7 @@ public class AnimalDAO  {
 			pStatement.setString(2, animal.getRaca());
 			pStatement.setString(3, animal.getSexo());
 			pStatement.setString(4, animal.getEspecie());
-			pStatement.setString(5, animal.getCpfDono());
+			pStatement.setInt(5, animal.getIdDono());
 
 			pStatement.execute();
 		} catch (SQLException e) {
@@ -51,7 +51,7 @@ public class AnimalDAO  {
 
 
 	public ArrayList<Animais> listarAnimais() throws ExceptionDAO, SQLException {
-		String sql = " SELECT * FROM animal";
+		String sql = " SELECT * FROM Tb_Animais";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		ArrayList<Animais> animais = null;
@@ -67,15 +67,15 @@ public class AnimalDAO  {
 
 				while (rs.next()) {
 
-					Animais anima = new Animais();
+					Animais animal = new Animais();
 
-					anima.setIdPet(rs.getInt("idAnimais"));
-					anima.setNome(rs.getString("nome"));
-					anima.setRaca(rs.getString("raca"));
-					anima.setSexo(rs.getString("sexo"));
-					anima.setEspecie(rs.getString("especie"));
-					anima.setCpfDono(rs.getString("cpfDono"));
-					animais.add(anima);
+					animal.setIdPet(rs.getInt("Id"));
+					animal.setNome(rs.getString("Nome"));
+					animal.setRaca(rs.getString("Raca"));
+					animal.setSexo(rs.getString("Sexo"));
+					animal.setEspecie(rs.getString("Especie"));
+					animal.setIdDono(rs.getInt("Id_Tutor"));
+					animais.add(animal);
 				}
 			}
 		} catch (SQLException e) {
@@ -99,9 +99,9 @@ public class AnimalDAO  {
 
 		return animais;
 	}
-	public ArrayList<Animais> listarAnimaisClienteCompleto(String cpfDono) throws ExceptionDAO, SQLException {
-		String sql = " SELECT idPet, nomePet, racaPet, especiePet, sexoPet FROM animais "
-				+ "INNER JOIN cliente cli ON cpfDono = cpfCliente WHERE cpfCliente =" + cpfDono ;
+	public ArrayList<Animais> listarAnimaisClienteCompleto(int idDono) throws ExceptionDAO, SQLException {
+		String sql = " SELECT Id, Nome, Raca, Especie, Sexo FROM Tb_Animais as an "
+				+ "INNER JOIN Tb_Tutores tu ON tu.Id = an.Id_Tutor WHERE an.Id_Tutor =" + idDono ;
 
 		PreparedStatement pStatement = null;
 		Connection connection = null;
@@ -119,14 +119,14 @@ public class AnimalDAO  {
 
 				while (rs.next()) {
 
-					Animais anima = new Animais();
-					anima.setIdPet(rs.getInt("idPet"));
-					anima.setNome(rs.getString("nomePet"));
-					anima.setEspecie(rs.getString("especiePet"));
-					anima.setRaca(rs.getString("racaPet"));
-					anima.setSexo(rs.getString("sexoPet"));
+					Animais animal = new Animais();
+					animal.setIdPet(rs.getInt("Id"));
+					animal.setNome(rs.getString("Nome"));
+					animal.setEspecie(rs.getString("Especie"));
+					animal.setRaca(rs.getString("Raca"));
+					animal.setSexo(rs.getString("Sexo"));
 
-					animais.add(anima);
+					animais.add(animal);
 				}
 			}
 		} catch (SQLException e) {
@@ -152,10 +152,10 @@ public class AnimalDAO  {
 		return animais;
 	}
 
-	public ArrayList<Animais> listarAnimaisCliente(int a) throws ExceptionDAO, SQLException {
+	public ArrayList<Animais> listarAnimaisCliente(int id) throws ExceptionDAO, SQLException {
 
 
-		String sql = " SELECT nomePet, racaPet, sexoPet, especiePet FROM animais WHERE idPet = " + a;
+		String sql = " SELECT Id, Nome, Raca, Sexo, Especie FROM Tb_Animais WHERE Id = " + id;
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 
@@ -174,10 +174,11 @@ public class AnimalDAO  {
 
 					Animais anima = new Animais();
 
-					anima.setNome(rs.getString("nomePet"));
-					anima.setRaca(rs.getString("racaPet"));
-					anima.setSexo(rs.getString("sexoPet"));
-					anima.setEspecie(rs.getString("especiePet"));
+					anima.setIdPet(rs.getInt("Id"));
+					anima.setNome(rs.getString("Nome"));
+					anima.setRaca(rs.getString("Raca"));
+					anima.setSexo(rs.getString("Sexo"));
+					anima.setEspecie(rs.getString("Especie"));
 					animais.add(anima);
 				}
 			}
@@ -204,7 +205,7 @@ public class AnimalDAO  {
 	}
 
 	public ArrayList<Animais> carregandoID() throws ExceptionDAO, SQLException {
-		String sql = " select idPet from animais ";
+		String sql = " SELECT Id FROM Tb_Animais ";
 		PreparedStatement pStatement = null;
 		Connection connection = null;
 		ArrayList<Animais> animals = null;
@@ -218,7 +219,7 @@ public class AnimalDAO  {
 				animals = new ArrayList<Animais>();
 				while (rs.next()) {
 					Animais animal = new Animais();
-					animal.setIdPet(rs.getInt("idPet"));
+					animal.setIdPet(rs.getInt("Id"));
 					// 					cliente.setNome(rs.getString("nome_cliente"));
 					animals.add(animal);
 				}
@@ -246,7 +247,7 @@ public class AnimalDAO  {
 
 	}
 
-	public ArrayList<Animais> listarAnimaisFields(int a) throws ExceptionDAO, SQLException {
+	/*public ArrayList<Animais> listarAnimaisFields(int a) throws ExceptionDAO, SQLException {
 		String sql = " SELECT * FROM animal WHERE idAnimais = "+a;
 		PreparedStatement pStatement = null;
 		Connection connection = null;
@@ -294,7 +295,7 @@ public class AnimalDAO  {
 		}
 
 		return animais;
-	}
+	}*/
 
 
 

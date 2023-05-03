@@ -9,14 +9,21 @@ import com.gustavo.control.ExceptionDAO;
 
 
 public class Cliente {
-
+	private int id;
 	private String nome;
 	private String cpf;
 	private String endereco;
 
 
-	public Cliente( String nome, String cpf, String endereco) {
+	public Cliente(int id, String nome, String cpf, String endereco) {
+		this.setId(id);
+		this.nome = nome;
+		this.cpf = cpf;
+		this.endereco = endereco;
 
+	}
+	
+	public Cliente(String nome, String cpf, String endereco) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.endereco = endereco;
@@ -49,8 +56,8 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 
-	public ArrayList<Cliente> listarCliente(String cpf) throws ExceptionDAO, SQLException {
-		return new ClienteDAO().listarClientes(cpf);
+	public ArrayList<Cliente> listarCliente() throws ExceptionDAO, SQLException {
+		return new ClienteDAO().listarClientes();
 	}
 
 	public static void cadastrarCliente(Cliente cliente) throws ExceptionDAO {
@@ -59,6 +66,12 @@ public class Cliente {
 	//    public static void alterarCliente(Cliente cliente) throws ExceptionDAO {
 	//        new ClienteDAO().alterarCliente(cliente);
 	//    }
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	//	@Override
 	//	public String toString() {
