@@ -7,6 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="Resources/mysql-connector-java-5.1.47.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joao Henrique/Desktop/mssql-jdbc-12.2.0.jre8.jar"/>
+	<classpathentry kind="lib" path="Resources/mssql-jdbc-12.2.0.jre8.jar"/>
+	<classpathentry kind="lib" path="Resources/JTattoo-1.6.13.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
