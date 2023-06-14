@@ -7,7 +7,7 @@ import com.digipets.dao.ClienteDAO;
 import com.digipets.model.Tutor;
 
 public class TutorController {
-	public static boolean cadastrarCliente(String cpf, String nome, String endereco) throws ExceptionDAO {
+	public static boolean cadastrarCliente(String cpf, String nome, String endereco) throws Exception {
 
 		if ( cpf != null && cpf.length() > 0 && nome != null && nome.length() > 0 && endereco != null && endereco.length() > 0) {
 			Tutor tutor = new Tutor(cpf, nome, endereco);

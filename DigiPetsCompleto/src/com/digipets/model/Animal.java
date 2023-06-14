@@ -1,5 +1,7 @@
 package com.digipets.model;
 
+import com.digipets.validate.Validate;
+
 public class Animal {
 	private int idPet;
 	private String nome;
@@ -8,13 +10,14 @@ public class Animal {
 	private String especie;
 	private int idDono;
 
-	public Animal(String nome, String raca, String sexo, String especie, int idDono) {
-
-		this.nome = nome;
-		this.raca = raca;
-		this.sexo = sexo;
-		this.especie = especie;
-		this.idDono = idDono;
+	public Animal(String nome, String raca, String sexo, String especie, int idDono) throws Exception {
+		if(Validate.Animal(nome, raca, sexo, especie, idDono)) {
+			this.nome = nome;
+			this.raca = raca;
+			this.sexo = sexo;
+			this.especie = especie;
+			this.idDono = idDono;
+		}
 	}
 	public Animal() {
 

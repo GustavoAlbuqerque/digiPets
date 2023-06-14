@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.digipets.controller.ExceptionDAO;
 import com.digipets.dao.ClienteDAO;
+import com.digipets.validate.Validate;
 
 
 
@@ -15,20 +16,23 @@ public class Tutor {
 	private String endereco;
 
 
-	public Tutor(int id, String nome, String cpf, String endereco) {
-		this.setId(id);
-		this.nome = nome;
-		this.cpf = cpf;
-		this.endereco = endereco;
-
+	public Tutor(int id, String nome, String cpf, String endereco) throws Exception {
+		if(Validate.Tutor(nome, cpf, endereco)) {
+			this.setId(id);
+			this.nome = nome;
+			this.cpf = cpf;
+			this.endereco = endereco;
+		}
 	}
 	
-	public Tutor(String nome, String cpf, String endereco) {
-		this.nome = nome;
-		this.cpf = cpf;
-		this.endereco = endereco;
-
+	public Tutor(String nome, String cpf, String endereco) throws Exception {
+		if(Validate.Tutor(nome, cpf, endereco)) {
+			this.nome = nome;
+			this.cpf = cpf;
+			this.endereco = endereco;
+		}
 	}
+	
 	public Tutor() {}
 
 
